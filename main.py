@@ -43,12 +43,15 @@ def main():
         pygame.display.flip()
         dt = clock.tick(60) / 1000
         updatable.update(dt)
-        for shot in shots:
-            shot.draw(screen)
-        print(f"Number of shots: {len(shots)}")
         shots.update(dt)
 
         pygame.display.flip()
+
+        for asteroid in asteroids:
+            for bullet in shots:
+                if bullet.collision_check(asteroid):
+                    asteroid.kill()
+                    bullet.kill()
 
         for object in asteroids:
             if object.collision_check(player):
